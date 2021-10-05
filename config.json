@@ -1,0 +1,3 @@
+{
+    "otpSecret": "base32 TOTP Token"
+}

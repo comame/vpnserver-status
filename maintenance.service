@@ -4,12 +4,12 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/node /home/comame/maintenance/src/
-WorkingDirectory=/home/comame/maintenance/
+ExecStart=/usr/bin/node /home/maintenance-node/src/
+WorkingDirectory=/home/maintenance-node/
 KillMode=process
 Restart=always
-User=node
-Group=node
+User=maintenance-node
+Group=maintenance-node
 
 [Install]
 WantedBy=multi-user.target
