@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>maintenance</title>
+</head>
+<body>
+    <label>OTP <input id='otp'></label>
+    <h2>SoftEther</h2>
+    <div>
+        <button data-endpoint='statusSoftether' data-method='GET'>STATUS</button>
+        <button data-endpoint='restartSoftether' data-method='GET'>RESTART</button>
+    </div>
+    <input id='cls' value='CLEAR' type='button'>
+    <pre id='output-pre'><code id='output'></code></pre>
+
+    <style>
+        div {
+            margin-bottom: 2rem;
+        }
+        #output-pre {
+            height: 50vh;
+            background: lightgray;
+            overflow-y: auto;
+        }
+    </style>
+
+    <script>
+        document.getElementById('cls').addEventListener('click', () => {
+            document.getElementById('output').textContent = ''
+        })
+        function output(msg) {
+            console.log(msg)
+            document.getElementById('output').textContent += msg + '\n'
+        }
+        function disableButtons() {
+            document.querySelectorAll('button').forEach(button => {
+                button.disabled = true
+            })
+        }
+        function enableButtons() {
+            document.querySelectorAll('button').forEach(button => {
+                button.disabled = false
+            })
+        }
+
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', async () => {
+                disableButtons()
+
+                const otp = document.getElementById('otp').value
+                document.getElementById('otp').value = null
+
+                const endpoint = button.getAttribute('data-endpoint')
+                const method = button.getAttribute('data-method')
+
+                output(`Fetching ${method} ${endpoint}`)
+
+                const res = await fetch('/api/' + endpoint, {
+                    method,
+                    headers: {
+                        'Authorization': otp
+                    }
+                }).then(res => res.text())
+
+                output(res)
+
+                enableButtons()
+            })
+        })
+    </script>
+</body>
+</html>

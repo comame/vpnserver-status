@@ -1,0 +1,15 @@
+[Unit]
+Description=:2000
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /home/comame/maintenance/src/
+WorkingDirectory=/home/comame/maintenance/
+KillMode=process
+Restart=always
+User=node
+Group=node
+
+[Install]
+WantedBy=multi-user.target
