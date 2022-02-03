@@ -57,7 +57,7 @@
 
                 output(`Fetching ${method} ${endpoint}`)
 
-                const res = await fetch('/api/' + endpoint, {
+                const res = await fetch('./api/' + endpoint, {
                     method,
                     headers: {
                         'Authorization': otp
